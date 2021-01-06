@@ -1,0 +1,24 @@
+{
+  "name": "full-js-app",
+  "version": "1.0.0",
+  "description": "simple ERP",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmedfcih2014/full-js-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmedfcih2014/full-js-app/issues"
+  },
+  "homepage": "https://github.com/ahmedfcih2014/full-js-app#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  },
+  "type":"module"
+}
