@@ -1,0 +1,15 @@
+            <div class="clearfix"></div>
+			</div>
+            <%- include('./footer.ejs') %>
+			<div class="control-sidebar-bg"></div>
+        </div>
+        <%- include('./js.ejs') %>
+		<script>
+		    $(document).ready(function() {
+		        $('.datePicker').datepicker({format:'yyyy-mm-dd' ,autoclose:true})
+		        $('.datePicker').attr('autocomplete' ,'off')
+				$('select.form-control').addClass('select2')
+				$('select.form-control').css('width' ,'100%')
+                $('.select2').select2()
+		    })
+		</script>

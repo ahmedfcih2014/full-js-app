@@ -1,13 +1,18 @@
 import express from 'express'
 import {server_config} from './config.js'
-import Admins from './back-end/controllers/Admins.js'
 
 const app = express()
 
+// set view engine
+app.set('view engine' ,'ejs')
+app.set('views' ,'back-end/views')
+
+// use this middleware for static files
+app.use(express.static('./public'))
+
 app.get('/' ,(req ,res) => {
-    res.send('Home Page')
+    res.render('layout')
 })
-app.use(Admins)
 
 app.listen(
     server_config.port,
