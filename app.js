@@ -1,5 +1,6 @@
 import express from 'express'
 import {server_config} from './config.js'
+import JobTitleRouter from './back-end/routes/job-titles.js'
 
 const app = express()
 
@@ -13,6 +14,8 @@ app.use(express.static('./public'))
 app.get('/' ,(req ,res) => {
     res.render('layout')
 })
+
+app.use('/job-titles' ,JobTitleRouter)
 
 app.listen(
     server_config.port,
