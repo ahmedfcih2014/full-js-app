@@ -10,9 +10,10 @@ app.set('views' ,'back-end/views')
 
 // use this middleware for static files
 app.use(express.static('./public'))
+app.use(express.urlencoded({extended: true}))
 
-app.get('/' ,(req ,res) => {
-    res.render('layout')
+app.get('/dashboard' ,(req ,res) => {
+    res.render('layout' ,{title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: ''})
 })
 
 app.use('/job-titles' ,JobTitleRouter)

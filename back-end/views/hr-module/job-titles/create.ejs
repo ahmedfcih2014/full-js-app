@@ -1,0 +1,26 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Job Titles CRUD </h3>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> English Job Title Name </label>
+                    <input class="form-control" placeholder="English Name" name="name_en">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Arabic Job Title Name </label>
+                    <input class="form-control" placeholder="Arabic Name" name="name_ar">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

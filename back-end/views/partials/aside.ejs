@@ -10,12 +10,12 @@
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class=" active">
+            <li class="<%= current_uri == '/dashboard' ? 'active' : '' %>">
                 <a href="/dashboard">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="treeview " style="height: auto;">
+            <li class="treeview <%= current_group == 'hr' ? 'active open' : '' %>" style="height: auto;">
                 <a href="#">
                     <i class="fa fa-suitcase"></i> <span>HR</span>
                     <span class="pull-right-container">
@@ -23,7 +23,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="">
+                    <li class="<%= current_uri == '/job-titles' ? 'active' : '' %>">
                         <a href="/job-titles">
                             <i class="fa fa-tags"></i> Job Titles
                         </a>

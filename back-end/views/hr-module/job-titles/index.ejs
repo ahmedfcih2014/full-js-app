@@ -1,0 +1,39 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/job-titles/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Job Titles CRUD </h3>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>English Name</th>
+                    <th>Arabic Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% job_titles.forEach(job => { %>
+                    <tr>
+                        <td> <%= job.id %> </td>
+                        <td> <%= job.name_en %> </td>
+                        <td> <%= job.name_ar %> </td>
+                        <td>
+                            <a href="/job-titles/edit/<%= job.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="delete_me('/job-titles/delete/<%= job.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

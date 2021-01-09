@@ -3,4 +3,11 @@ const server_config = {
     host: 'localhost'
 }
 
-export {server_config}
+const db_config = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'simple_erp'
+}
+
+export {server_config ,db_config}
