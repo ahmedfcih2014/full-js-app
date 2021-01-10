@@ -1,0 +1,50 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Job Titles CRUD </h3>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Name </label>
+                    <input class="form-control" placeholder="Name" name="name" value="<%= model.name %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Yearly Vacations </label>
+                    <input class="form-control"
+                        type="number" min="0" max="365" value="<%= model.yearly_vacations %>"
+                        placeholder="Yearly Vacations" name="yearly_vacations">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Weakly Vacations </label>
+                    <input class="form-control"
+                        type="number" min="0" max="7" value="<%= model.weakly_vacations %>"
+                        placeholder="Weakly Vacations" name="weakly_vacations">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Work Day Start </label>
+                    <input class="form-control timer" placeholder="Work Day Start"
+                        name="work_day_start" value="<%= model.work_day_start %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Work Day End </label>
+                    <input class="form-control timer" placeholder="Work Day End"
+                        name="work_day_end" value="<%= model.work_day_end %>">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

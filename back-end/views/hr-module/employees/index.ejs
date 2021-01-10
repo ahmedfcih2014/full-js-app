@@ -1,0 +1,44 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/employees/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Employees CRUD </h3>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>National ID</th>
+                    <th>Salary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% employees.forEach(setting => { %>
+                    <tr>
+                        <td> <%= setting.id %> </td>
+                        <td> <%= setting.name %> </td>
+                        <td> <%= setting.phone %> </td>
+                        <td> <%= setting.national_id %> </td>
+                        <td> <%= setting.salary %> </td>
+                        <td>
+                            <a href="/employees/edit/<%= setting.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger"
+                                onclick="delete_me('/employees/delete/<%= setting.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

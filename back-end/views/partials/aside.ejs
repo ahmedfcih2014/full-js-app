@@ -28,32 +28,32 @@
                             <i class="fa fa-tags"></i> Job Titles
                         </a>
                     </li>
-                    <li class="">
+                    <li class="<%= current_uri == '/employee-settings' ? 'active' : '' %>">
                         <a href="/employee-settings">
                             <i class="fa fa-cog"></i> Employee Settings
                         </a>
                     </li>
-                    <li class="">
-                        <a href="/employees">
+                    <li class="<%= current_uri == '/employees' ? 'active' : '' %>">
+                        <a href="/employees"
                             <i class="fa fa-users"></i> Employees
                         </a>
                     </li>
-                    <li class="">
+                    <li class="<%= current_uri == '/attendance' ? 'active' : '' %>">
                         <a href="/attendance">
                             <i class="fa fa-calendar"></i> Attendance
                         </a>
                     </li>
-                    <li class="">
+                    <li class="<%= current_uri == '/deduction-bonuses' ? 'active' : '' %>">
                         <a href="/deduction-bonuses">
                             <i class="fa fa-money"></i> Deduction & Bonuses
                         </a>
                     </li>
-                    <li class="">
+                    <li class="<%= current_uri == '/advances' ? 'active' : '' %>">
                         <a href="/advances">
                             <i class="fa fa-credit-card"></i> Advances
                         </a>
                     </li>
-                    <li class="">
+                    <li class="<%= current_uri == '/salaries' ? 'active' : '' %>">
                         <a href="/salaries">
                             <i class="fa fa-money"></i> Salaries
                         </a>

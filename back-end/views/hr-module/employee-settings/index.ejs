@@ -1,0 +1,46 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/employee-settings/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Employee Settings CRUD </h3>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Yearly Vacations</th>
+                    <th>Weakly Vacations</th>
+                    <th>Work Day Start</th>
+                    <th>Work Day End</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% settings.forEach(setting => { %>
+                    <tr>
+                        <td> <%= setting.id %> </td>
+                        <td> <%= setting.name %> </td>
+                        <td> <%= setting.yearly_vacations %> </td>
+                        <td> <%= setting.weakly_vacations %> </td>
+                        <td> <%= setting.work_day_start %> </td>
+                        <td> <%= setting.work_day_end %> </td>
+                        <td>
+                            <a href="/employee-settings/edit/<%= setting.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger"
+                                onclick="delete_me('/employee-settings/delete/<%= setting.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

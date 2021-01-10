@@ -68,7 +68,6 @@ export default class ModelBase {
             })
             query = query.slice(0 ,-1)
             query += ` WHERE id = ${id}`
-            console.log(query)
             const connection = await mysql.createConnection(db_config);
             const [rows] = await connection.execute(query);
             return rows.affectedRows

@@ -1,6 +1,8 @@
 import express from 'express'
 import {server_config} from './config.js'
 import JobTitleRouter from './back-end/routes/job-titles.js'
+import EmployeeSettingRouter from './back-end/routes/employee-settings.js'
+import EmployeesRouter from './back-end/routes/employees.js'
 
 const app = express()
 
@@ -17,6 +19,8 @@ app.get('/dashboard' ,(req ,res) => {
 })
 
 app.use('/job-titles' ,JobTitleRouter)
+app.use('/employee-settings' ,EmployeeSettingRouter)
+app.use('/employees' ,EmployeesRouter)
 
 app.listen(
     server_config.port,

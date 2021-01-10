@@ -1,0 +1,76 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Employees CRUD </h3>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Name </label>
+                    <input class="form-control" placeholder="Name" name="name" value="<%= model.name %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Phone </label>
+                    <input class="form-control" placeholder="Phone" name="phone" value="<%= model.phone %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> National ID </label>
+                    <input class="form-control" placeholder="National ID" name="national_id" value="<%= model.national_id %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Salary </label>
+                    <input class="form-control" placeholder="Salary" name="salary" value="<%= model.salary %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Join Date </label>
+                    <input class="form-control date" placeholder="Join Date" name="join_date">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Job Title </label>
+                    <select class="form-control select2" name="job_title_id">
+                        <option value=""> Select Title </option>
+                        <% titles.forEach(title => { %>
+                            <option <%= title.id == model.job_title_id ? 'selected' : '' %>
+                                value="<%= title.id %>"> <%= title.name_en %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Employee Setting </label>
+                    <select class="form-control select2" name="setting_id">
+                        <option value=""> Select Setting </option>
+                        <% settings.forEach(setting => { %>
+                            <option <%= setting.id == model.setting_id ? 'selected' : '' %>
+                                value="<%= setting.id %>"> <%= setting.name %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+        $(document).ready(function() {
+            const join_date = new Date('<%= model.join_date %>')
+            const year = join_date.getFullYear()
+            const month = join_date.getMonth() + 1 <= 9 ? `0${join_date.getMonth() + 1}` : join_date.getMonth() + 1
+            const day = join_date.getDate() <= 9 ? `0${join_date.getDate()}` : join_date.getDate()
+            $('input[name="join_date"]').val(`${year}-${month}-${day}`)
+        })
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>
