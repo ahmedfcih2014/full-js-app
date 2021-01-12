@@ -25,6 +25,23 @@ export default class ModelBase {
         return rows
     }
 
+    async joins_one_root_table(root_table_name ,table_fields ,joined_tables) {
+        let query = 'SELECT '
+        table_fields.forEach(table => {
+            table.fields.forEach(field => {
+                query += `${table.name}.${field.name} as ${field.alias} ,`
+            })
+        })
+        query = query.slice(0 ,-1)
+        query += `FROM ${root_table_name} `
+        joined_tables.forEach(join => {
+            query += `JOIN ${join.joined_table} ON ${root_table_name}.${join.foreign_key} = ${join.joined_table}.${join.primary_key} `
+        })
+        const connection = await mysql.createConnection(db_config);
+        const [rows] = await connection.execute(query);
+        return rows
+    }
+
     async delete_by_id(table_name ,id) {
         let query = `DELETE FROM ${table_name} WHERE id = ${id}`
         const connection = await mysql.createConnection(db_config);

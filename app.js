@@ -3,6 +3,7 @@ import {server_config} from './config.js'
 import JobTitleRouter from './back-end/routes/job-titles.js'
 import EmployeeSettingRouter from './back-end/routes/employee-settings.js'
 import EmployeesRouter from './back-end/routes/employees.js'
+import AttendanceRouter from './back-end/routes/attendances.js'
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.set('views' ,'back-end/views')
 app.use(express.static('./public'))
 app.use(express.urlencoded({extended: true}))
 
+app.get('/' ,(req ,res) => res.redirect('/dashboard'))
 app.get('/dashboard' ,(req ,res) => {
     res.render('layout' ,{title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: ''})
 })
@@ -21,6 +23,7 @@ app.get('/dashboard' ,(req ,res) => {
 app.use('/job-titles' ,JobTitleRouter)
 app.use('/employee-settings' ,EmployeeSettingRouter)
 app.use('/employees' ,EmployeesRouter)
+app.use('/attendance' ,AttendanceRouter)
 
 app.listen(
     server_config.port,

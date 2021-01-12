@@ -7,8 +7,36 @@ export default class Employee extends ModelBase {
     }
 
     async list() {
-        return this.get_all(
-            this.table_name
+        return this.joins_one_root_table(
+            this.table_name,
+            [
+                {
+                    name: this.table_name,
+                    fields: [
+                        {name: 'id', alias: 'id'},
+                        {name: 'name', alias: 'name'},
+                        {name: 'phone', alias: 'phone'},
+                        {name: 'national_id', alias: 'national_id'},
+                        {name: 'salary', alias: 'salary'}
+                    ]
+                },
+                {
+                    name: 'job_titles',
+                    fields: [
+                        {name: 'name_ar', alias: 'job_title_name'}
+                    ]
+                },
+                {
+                    name: 'emplyee_settings',
+                    fields: [
+                        {name: 'name', alias: 'setting_name'}
+                    ]
+                }
+            ],
+            [
+                {joined_table: 'job_titles', foreign_key: 'job_title_id', primary_key: 'id'},
+                {joined_table: 'emplyee_settings', foreign_key: 'setting_id', primary_key: 'id'}
+            ]
         )
     }
 

@@ -8,6 +8,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Setting</th>
+                    <th>Job Title</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>National ID</th>
@@ -19,6 +21,8 @@
                 <% employees.forEach(setting => { %>
                     <tr>
                         <td> <%= setting.id %> </td>
+                        <td> <%= setting.setting_name %> </td>
+                        <td> <%= setting.job_title_name %> </td>
                         <td> <%= setting.name %> </td>
                         <td> <%= setting.phone %> </td>
                         <td> <%= setting.national_id %> </td>

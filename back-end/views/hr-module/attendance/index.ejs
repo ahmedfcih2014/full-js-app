@@ -1,0 +1,42 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/attendance/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Attendance CRUD </h3>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% models.forEach(model => { %>
+                    <% let operation_date = new Date(model.operation_date).toLocaleString("en-CA", {timeZone: "Africa/Cairo"}) %>
+                    <tr>
+                        <td> <%= model.id %> </td>
+                        <td> <%= model.employee_name %> </td>
+                        <td> <%= `${operation_date}` %> </td>
+                        <td> <%= model.operation_type %> </td>
+                        <td>
+                            <a href="/attendance/edit/<%= model.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="delete_me('/attendance/delete/<%= model.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>
