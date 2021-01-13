@@ -1,0 +1,41 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/advances/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Advances CRUD </h3>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% models.forEach(model => { %>
+                    <tr>
+                        <td> <%= model.id %> </td>
+                        <td> <%= model.employee_name %> </td>
+                        <td> <%= model.operation_amount %> </td>
+                        <td> <%= model.operation_type %> </td>
+                        <td>
+                            <a href="/advances/edit/<%= model.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="delete_me('/advances/delete/<%= model.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

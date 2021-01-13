@@ -1,0 +1,50 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Attendance CRUD </h3>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Operation Type </label>
+                    <select class="form-control select2" name="operation_type">
+                        <option <%= model.operation_type == 'attendance' ? 'selected' : '' %> value="attendance"> attendance </option>
+                        <option <%= model.operation_type == 'leave' ? 'selected' : '' %> value="leave"> leave </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Operation Date </label>
+                    <input class="form-control datetime" placeholder="YYYY-MM-DD HH:MM:SS" name="operation_date">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Employee </label>
+                    <select class="form-control select2" name="employee_id">
+                        <option value="">Select Employee</option>
+                        <% employees.forEach(employee => { %>
+                            <option <%= model.employee_id == employee.id ? 'selected' : '' %>
+                                value="<%= employee.id %>"> <%= employee.name %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+        $(document).ready(function() {
+            const operation_date = new Date('<%= model.operation_date %>')
+            const year = operation_date.getFullYear()
+            const month = operation_date.getMonth() + 1 <= 9 ? `0${operation_date.getMonth() + 1}` : operation_date.getMonth() + 1
+            const day = operation_date.getDate() <= 9 ? `0${operation_date.getDate()}` : operation_date.getDate()
+            const hours = operation_date.getHours() <= 9 ? `0${operation_date.getHours()}` : operation_date.getHours()
+            const minutes = operation_date.getMinutes() <= 9 ? `0${operation_date.getMinutes()}` : operation_date.getMinutes()
+            $('input[name="operation_date"]').val(`${year}-${month}-${day} ${hours}:${minutes}:00`)
+        })
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>
