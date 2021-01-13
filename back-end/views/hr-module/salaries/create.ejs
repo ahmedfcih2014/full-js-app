@@ -1,0 +1,61 @@
+<%- include('../../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Salaries CRUD </h3>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Employee </label>
+                    <select class="form-control select2" name="employee_id">
+                        <option value="">Select Employee</option>
+                        <% employees.forEach(employee => { %>
+                            <option value="<%= employee.id %>"> <%= employee.name %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Salary </label>
+                    <input class="form-control" placeholder="Salary" name="salary">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Date From </label>
+                    <input class="form-control date" placeholder="Date From" name="date_from">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Date To </label>
+                    <input class="form-control date" placeholder="Date To" name="date_to">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Deduction Amount </label>
+                    <input class="form-control" placeholder="Deduction Amount" name="deduction_amount">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Advances Amount </label>
+                    <input class="form-control" placeholder="Advances Amount" name="advances_amount">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Bonus Amount </label>
+                    <input class="form-control" placeholder="Bonus Amount" name="bonus_amount">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../../partials/master-part-3.ejs') %>

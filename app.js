@@ -6,6 +6,7 @@ import EmployeesRouter from './back-end/routes/employees.js'
 import AttendanceRouter from './back-end/routes/attendances.js'
 import Deduction_N_BonusesRouter from './back-end/routes/deductions-n-bonuses.js'
 import Advances from './back-end/routes/advances.js'
+import SalariesRouter from './back-end/routes/salaries.js'
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.use('/employees' ,EmployeesRouter)
 app.use('/attendance' ,AttendanceRouter)
 app.use('/deduction-bonuses' ,Deduction_N_BonusesRouter)
 app.use('/advances' ,Advances)
+app.use('/salaries' ,SalariesRouter)
 
 app.listen(
     server_config.port,
