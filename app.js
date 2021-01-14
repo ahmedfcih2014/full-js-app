@@ -7,6 +7,7 @@ import AttendanceRouter from './back-end/routes/attendances.js'
 import Deduction_N_BonusesRouter from './back-end/routes/deductions-n-bonuses.js'
 import Advances from './back-end/routes/advances.js'
 import SalariesRouter from './back-end/routes/salaries.js'
+import expressSession from 'express-session'
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.set('views' ,'back-end/views')
 // use this middleware for static files
 app.use(express.static('./public'))
 app.use(express.urlencoded({extended: true}))
+app.use(expressSession({secret: 'max' ,saveUninitialized: false ,resave: false}))
 
 app.get('/' ,(req ,res) => res.redirect('/dashboard'))
 app.get('/dashboard' ,(req ,res) => {

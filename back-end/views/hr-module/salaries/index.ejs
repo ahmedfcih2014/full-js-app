@@ -4,6 +4,12 @@
             <i class="fa fa-plus"></i>
         </a>
         <h3 class="pull-left"> Salaries CRUD </h3>
+        <div class="clearfix"></div>
+        <% if (alert_message) { %>
+            <div class="alert alert-<%= is_danger ? 'danger' : 'success' %>">
+                <%= alert_message %>
+            </div>
+        <% }%>
         <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
             <thead>
                 <tr>

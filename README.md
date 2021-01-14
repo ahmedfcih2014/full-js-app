@@ -16,7 +16,7 @@ hints:
 just after finalize HR Module
 
 Todo List:
-1- Add server side validations
+1- Add server side validations [done]
 2- Enable sessions
 3- Make authentication
 4- Enable pagination mechanism

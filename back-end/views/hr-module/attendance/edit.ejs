@@ -1,6 +1,13 @@
 <%- include('../../partials/master-part-1.ejs') %>
     <div class="col-md-12 box">
         <h3> Attendance CRUD </h3>
+        <div class="col-md-12">
+            <% errors.forEach(error => { %>
+                <div class="alert alert-danger">
+                    <%= error.msg %>
+                </div>
+            <% }) %>
+        </div>
         <form method="POST">
             <div class="col-md-6">
                 <div class="form-group">
