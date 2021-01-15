@@ -10,6 +10,7 @@ hints:
 3- to use some dummy data you will find a folder called db-structures
     all modules will have a separate SQL file for each one ,import the module(s) test data you need
 4- in this project we care only about back end
+5- don't forget to import admin.sql in db-structure folder then use (admin ,secret) as admin credentials
 
 ---------------------------------------------------------------
 
@@ -17,7 +18,8 @@ just after finalize HR Module
 
 Todo List:
 1- Add server side validations [done]
-2- Enable sessions
-3- Make authentication
+2- Enable sessions [done]
+3- Make authentication [done]
 4- Enable pagination mechanism
 5- Enable permissions and use them in HR Module
+6- Use redis as a gateway to store sessions

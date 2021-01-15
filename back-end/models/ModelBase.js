@@ -16,8 +16,9 @@ export default class ModelBase {
         if (conditions && typeof conditions[Symbol.iterator] === 'function') {
             query += ` where `
             conditions.forEach(condition => {
-                query += `${condition.key} ${condition.operator} '${condition.value}'`
+                query += `${condition.key} ${condition.operator} '${condition.value}' and `
             })
+            query = query.slice(0 ,-4)
         }
         query += ` ORDER BY id DESC`
         const connection = await mysql.createConnection(db_config);

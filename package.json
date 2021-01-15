@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ahmedfcih2014/full-js-app#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
