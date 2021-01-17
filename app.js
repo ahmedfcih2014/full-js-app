@@ -10,6 +10,7 @@ import SalariesRouter from './back-end/routes/salaries.js'
 import expressSession from 'express-session'
 import middlewares from './middlewares.js'
 import Auth from './back-end/controllers/Auth.js'
+import BlogRouter from './back-end/routes/blogs.js'
 
 const app = express()
 
@@ -48,6 +49,7 @@ app.use('/attendance' ,middlewares.is_admin_auth ,AttendanceRouter)
 app.use('/deduction-bonuses' ,middlewares.is_admin_auth ,Deduction_N_BonusesRouter)
 app.use('/advances' ,middlewares.is_admin_auth ,Advances)
 app.use('/salaries' ,middlewares.is_admin_auth ,SalariesRouter)
+app.use('/blogs' ,BlogRouter)
 
 app.listen(
     server_config.port,
