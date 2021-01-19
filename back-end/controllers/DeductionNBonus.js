@@ -1,5 +1,5 @@
-import DeductionNBonusModel from '../models/Deduction_N_Bonus.js'
-import EmployeeModel from '../models/Employee.js'
+import DeductionNBonusModel from '../repositories/Deduction_N_BonusRepo.js'
+import EmployeeModel from '../repositories/EmployeeRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class DeductionNBonus {

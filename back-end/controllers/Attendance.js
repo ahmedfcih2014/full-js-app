@@ -1,5 +1,5 @@
-import AttendanceModel from '../models/Attendance.js'
-import EmployeeModel from '../models/Employee.js'
+import AttendanceModel from '../repositories/AttendanceRepo.js'
+import EmployeeModel from '../repositories/EmployeeRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class Attendance {

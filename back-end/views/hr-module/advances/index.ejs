@@ -24,7 +24,7 @@
                 <% models.forEach(model => { %>
                     <tr>
                         <td> <%= model.id %> </td>
-                        <td> <%= model.employee_name %> </td>
+                        <td> <%= model.employee?.name %> </td>
                         <td> <%= model.operation_amount %> </td>
                         <td> <%= model.operation_type %> </td>
                         <td>

@@ -25,7 +25,7 @@
                     <% let operation_date = new Date(model.operation_date).toLocaleString("en-CA", {timeZone: "Africa/Cairo"}) %>
                     <tr>
                         <td> <%= model.id %> </td>
-                        <td> <%= model.employee_name %> </td>
+                        <td> <%= model.employee?.name %> </td>
                         <td> <%= `${operation_date}` %> </td>
                         <td> <%= model.operation_type %> </td>
                         <td>

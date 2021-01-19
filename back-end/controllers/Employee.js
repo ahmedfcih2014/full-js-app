@@ -1,6 +1,6 @@
-import EmployeeModel from '../models/Employee.js'
-import JobTitlesModel from '../models/JobTitle.js'
-import EmployeeSettingModel from '../models/EmployeeSetting.js'
+import EmployeeModel from '../repositories/EmployeeRepo.js'
+import JobTitlesModel from '../repositories/JobTitleRepo.js'
+import EmployeeSettingModel from '../repositories/EmployeeSettingRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class Employee {
@@ -12,6 +12,7 @@ export default class Employee {
 
     async index(req ,res) {
         const models = await this.model.list()
+        console.log(models[0])
         let alert_message = req.session.alert_message ? req.session.alert_message : false
         let is_danger = req.session.is_danger ? req.session.is_danger : false
         res.render(

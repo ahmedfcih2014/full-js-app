@@ -1,23 +1,21 @@
 import DataTypes from 'sequelize'
 import { db_orm } from '../../config.js'
 
-const Blog = db_orm.define('blog' ,{
-    title: {
+const Admin = db_orm.define('admin' ,{
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    sub_title: {
+    username: {
         type: DataTypes.STRING,
-        defaultValue: ''
+        allowNull: false
     },
-    description: {
+    password: {
         type: DataTypes.STRING,
-        defaultValue: ''
-    },
-    category_id: {
-        type: DataTypes.INTEGER,
         allowNull: false
     }
+} ,{
+    timestamps: false
 })
 
-export default Blog
+export default Admin

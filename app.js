@@ -10,7 +10,7 @@ import SalariesRouter from './back-end/routes/salaries.js'
 import expressSession from 'express-session'
 import middlewares from './middlewares.js'
 import Auth from './back-end/controllers/Auth.js'
-import BlogRouter from './back-end/routes/blogs.js'
+import SetupORMRelation from './back-end/orm-models/SetupRelation.js'
 
 const app = express()
 
@@ -37,6 +37,8 @@ app.get('/login' ,middlewares.is_admin_unauth ,Auth.getLogin)
 app.post('/login' ,middlewares.is_admin_unauth ,Auth.postLogin)
 app.get('/logout' ,middlewares.is_admin_auth ,Auth.logout)
 
+SetupORMRelation()
+
 app.get('/' ,middlewares.is_admin_auth ,(req ,res) => res.redirect('/dashboard'))
 app.get('/dashboard' ,middlewares.is_admin_auth ,(req ,res) => {
     res.render('layout' ,{title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: ''})
@@ -49,7 +51,6 @@ app.use('/attendance' ,middlewares.is_admin_auth ,AttendanceRouter)
 app.use('/deduction-bonuses' ,middlewares.is_admin_auth ,Deduction_N_BonusesRouter)
 app.use('/advances' ,middlewares.is_admin_auth ,Advances)
 app.use('/salaries' ,middlewares.is_admin_auth ,SalariesRouter)
-app.use('/blogs' ,BlogRouter)
 
 app.listen(
     server_config.port,

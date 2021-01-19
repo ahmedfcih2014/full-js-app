@@ -27,7 +27,7 @@
                     <% let date_to = new Date(model.date_to).toLocaleDateString("en-CA", {timeZone: "Africa/Cairo"}) %>
                     <tr>
                         <td> <%= model.id %> </td>
-                        <td> <%= model.employee_name %> </td>
+                        <td> <%= model.employee?.name %> </td>
                         <td> <%= model.salary %> </td>
                         <td> <%= date_from %> </td>
                         <td> <%= date_to %> </td>

@@ -1,4 +1,4 @@
-import Admin from '../models/Admin.js'
+import Admin from '../repositories/AdminRepo.js'
 
 export default {
     getLogin: (req ,res) => {

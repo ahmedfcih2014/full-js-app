@@ -1,4 +1,4 @@
-import EmployeeSettingModel from '../models/EmployeeSetting.js'
+import EmployeeSettingModel from '../repositories/EmployeeSettingRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class EmployeeSetting {

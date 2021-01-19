@@ -1,6 +1,8 @@
 import mysql from 'mysql2/promise'
 import {db_config} from '../../config.js'
 
+// when im writing raw sql
+
 export default class ModelBase {
     async get_all(table_name ,fileds ,conditions) {
         let query = 'SELECT '

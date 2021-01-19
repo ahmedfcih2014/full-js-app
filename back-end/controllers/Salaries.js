@@ -1,5 +1,5 @@
-import SalaryModel from '../models/Salary.js'
-import EmployeeModel from '../models/Employee.js'
+import SalaryModel from '../repositories/SalaryRepo.js'
+import EmployeeModel from '../repositories/EmployeeRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class Salaries {

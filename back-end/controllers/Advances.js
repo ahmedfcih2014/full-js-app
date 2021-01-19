@@ -1,5 +1,5 @@
-import AdvanceModel from '../models/Advance.js'
-import EmployeeModel from '../models/Employee.js'
+import AdvanceModel from '../repositories/AdvanceRepo.js'
+import EmployeeModel from '../repositories/EmployeeRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class Advances {

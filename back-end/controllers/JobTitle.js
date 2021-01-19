@@ -1,4 +1,4 @@
-import JobTitleModel from '../models/JobTitle.js'
+import JobTitleModel from '../repositories/JobTitleRepo.js'
 import { validationResult } from 'express-validator'
 
 export default class JobTitle {
