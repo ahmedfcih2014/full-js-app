@@ -21,5 +21,6 @@ Todo List:
 2- Enable sessions [done]
 3- Make authentication [done]
 4- Using ORM instead of raw sql [done]
-5- Enable permissions and use them in HR Module
-6- Use redis as a gateway to store sessions
+5- pagination
+6- Enable permissions and use them in HR Module
+7- Use redis as a gateway to store sessions

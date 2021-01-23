@@ -1,0 +1,13 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <% pages.forEach(page => { %>
+            <li class="page-item <%= page.is_active ? 'active' : '' %> <%= page.disable ? ' disabled' : '' %>">
+                <a class="page-link"
+                    href="<%= page.link ? page.link : '#' %>">
+                    <%= page.name %>
+                </a>
+            </li>
+        <% }) %>
+        
+    </ul>
+</nav>
