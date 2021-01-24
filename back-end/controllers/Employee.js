@@ -2,23 +2,25 @@ import EmployeeModel from '../repositories/EmployeeRepo.js'
 import JobTitlesModel from '../repositories/JobTitleRepo.js'
 import EmployeeSettingModel from '../repositories/EmployeeSettingRepo.js'
 import { validationResult } from 'express-validator'
+import Pagination from './Pagination.js'
+import { default_values } from '../../config.js'
 
 export default class Employee {
     constructor() {
         this.model = new EmployeeModel
         this.job_titles = new JobTitlesModel
         this.settings = new EmployeeSettingModel
+        this.common_return = {title: 'Employees' ,current_uri: '/employees' ,current_group: 'hr'}
     }
 
     async index(req ,res) {
-        const models = await this.model.list()
-        console.log(models[0])
+        const page = req.query.page ? parseInt(req.query.page) : default_values.page
+        const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
+        const [employees ,rows_number] = await this.model.list(page ,limit ,true)
         let alert_message = req.session.alert_message ? req.session.alert_message : false
         let is_danger = req.session.is_danger ? req.session.is_danger : false
-        res.render(
-            'hr-module/employees/index',
-            {title: 'Employees' ,current_uri: '/employees' ,current_group: 'hr' ,employees: models ,alert_message ,is_danger}
-        )
+        const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
+        res.render('hr-module/employees/index', {...this.common_return ,employees ,alert_message ,is_danger ,pages})
         req.session.alert_message = ''
         req.session.is_danger = undefined
     }
@@ -41,10 +43,7 @@ export default class Employee {
         const errors = req.session.errors ? req.session.errors : []
         const titles = await this.job_titles.list()
         const settings = await this.settings.list()
-        res.render(
-            'hr-module/employees/create',
-            {title: 'Employees' ,current_uri: '/employees' ,current_group: 'hr' ,titles ,settings ,errors}
-        )
+        res.render('hr-module/employees/create', {...this.common_return ,titles ,settings ,errors})
         req.session.errors = []
     }
 
@@ -71,14 +70,11 @@ export default class Employee {
 
     async edit(req ,res) {
         const id = req.params.id
-        const employee = await this.model.fetch(id)
+        const model = await this.model.fetch(id)
         const titles = await this.job_titles.list()
         const settings = await this.settings.list()
         const errors = req.session.errors ? req.session.errors : []
-        res.render(
-            'hr-module/employees/edit',
-            {title: 'Employees' ,current_uri: '/employees' ,current_group: 'hr' ,model: employee ,titles ,settings ,errors}
-        )
+        res.render('hr-module/employees/edit', {...this.common_return ,model ,titles ,settings ,errors})
     }
 
     async update(req ,res) {

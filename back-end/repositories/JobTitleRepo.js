@@ -2,6 +2,7 @@ import JobTitleORM from '../orm-models/JobTitle.js'
 
 export default class JobTitleRepo {
     async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
         const order = desc_order ? [['id' ,'desc']] : []
         const options = {
             order: order,

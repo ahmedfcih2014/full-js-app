@@ -3,8 +3,17 @@ import EmployeeSetting from '../orm-models/EmployeeSetting.js'
 import JobTitle from '../orm-models/JobTitle.js'
 
 export default class EmployeeRepo {
-    async list() {
-        return await EmployeeORM.findAll({include: [JobTitle ,EmployeeSetting]})
+    async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
+        const order = desc_order ? [['id' ,'desc']] : []
+        const options = {
+            order: order,
+            limit,
+            offset: page * limit - limit,
+            include: [JobTitle ,EmployeeSetting]
+        }
+        const _employees = await EmployeeORM.findAndCountAll(options)
+        return [_employees.rows ,_employees.count]
     }
 
     async destroy(id) {

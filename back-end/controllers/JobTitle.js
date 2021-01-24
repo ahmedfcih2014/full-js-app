@@ -1,5 +1,7 @@
 import JobTitleModel from '../repositories/JobTitleRepo.js'
 import { validationResult } from 'express-validator'
+import Pagination from './Pagination.js'
+import { default_values } from '../../config.js'
 
 export default class JobTitle {
     constructor() {
@@ -12,30 +14,12 @@ export default class JobTitle {
     }
 
     async index(req ,res) {
-        const page = req.query.page ? parseInt(req.query.page) : 1
-        const limit = req.query.limit ? parseInt(req.query.limit) : 1
+        const page = req.query.page ? parseInt(req.query.page) : default_values.page
+        const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [job_titles ,rows_number] = await this.model.list(page ,limit ,true)
         let alert_message = req.session.alert_message ? req.session.alert_message : false
         let is_danger = req.session.is_danger ? req.session.is_danger : false
-        const pages = []
-        const pages_count = Math.ceil(rows_number / limit)
-        const set_medium_btn = pages_count > 6 ? true : false
-        for(let i = 0; i < pages_count; i++) {
-            if (set_medium_btn && (i + 1) == 4) {
-                pages.push({
-                    link: '#',
-                    name: '...',
-                    disable: true
-                })
-                i = pages_count - 3
-            } else {
-                pages.push({
-                    link: this.common_return.current_uri + '?page=' + (i + 1) + '&limit=' + limit,
-                    name: (i + 1),
-                    is_active: page == (i + 1) ? true : false
-                })
-            }
-        }
+        const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/job-titles/index',
             {...this.common_return ,job_titles ,alert_message ,is_danger ,pages}

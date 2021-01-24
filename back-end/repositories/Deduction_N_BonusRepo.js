@@ -2,8 +2,17 @@ import Deduction_N_BonusORM from '../orm-models/Deduction_N_Bonus.js'
 import Employee from '../orm-models/Employee.js'
 
 export default class Deduction_N_BonusRepo {
-    async list() {
-        return await Deduction_N_BonusORM.findAll({include: Employee})
+    async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
+        const order = desc_order ? [['id' ,'desc']] : []
+        const options = {
+            order: order,
+            limit,
+            offset: page * limit - limit,
+            include: Employee
+        }
+        const _deductions = await Deduction_N_BonusORM.findAndCountAll(options)
+        return [_deductions.rows ,_deductions.count]
     }
 
     async destroy(id) {

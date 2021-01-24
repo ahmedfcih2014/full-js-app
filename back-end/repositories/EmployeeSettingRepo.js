@@ -1,8 +1,16 @@
 import EmployeeSettingORM from '../orm-models/EmployeeSetting.js'
 
 export default class EmployeeSetting {
-    async list() {
-        return await EmployeeSettingORM.findAll()
+    async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
+        const order = desc_order ? [['id' ,'desc']] : []
+        const options = {
+            order: order,
+            limit,
+            offset: page * limit - limit
+        }
+        const _settings = await EmployeeSettingORM.findAndCountAll(options)
+        return [_settings.rows ,_settings.count]
     }
 
     async destroy(id) {

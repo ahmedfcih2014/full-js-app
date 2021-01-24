@@ -2,9 +2,17 @@ import AdvanceORM from '../orm-models/Advance.js'
 import Employee from '../orm-models/Employee.js'
 
 export default class AdvanceRepo {
-    async list() {
-        const advances = await AdvanceORM.findAll({include: Employee})
-        return advances
+    async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
+        const order = desc_order ? [['id' ,'desc']] : []
+        const options = {
+            order: order,
+            limit,
+            offset: page * limit - limit,
+            include: Employee
+        }
+        const _advances = await AdvanceORM.findAndCountAll(options)
+        return [_advances.rows ,_advances.count]
     }
 
     async destroy(id) {

@@ -2,8 +2,17 @@ import AttendanceORM from '../orm-models/Attendance.js'
 import Employee from '../orm-models/Employee.js'
 
 export default class AttendanceRepo {
-    async list() {
-        return await AttendanceORM.findAll({include: Employee})
+    async list(page = 1 ,limit = 10 ,desc_order = false) {
+        page = page <= 1 ? 1 : page
+        const order = desc_order ? [['id' ,'desc']] : []
+        const options = {
+            order: order,
+            limit,
+            offset: page * limit - limit,
+            include: Employee
+        }
+        const _attendance = await AttendanceORM.findAndCountAll(options)
+        return [_attendance.rows ,_attendance.count]
     }
 
     async destroy(id) {

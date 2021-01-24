@@ -22,4 +22,9 @@ const db_orm = new Sequelize(
     }
 )
 
-export {server_config ,db_config ,db_orm}
+const default_values = {
+    limit: 3,
+    page: 1
+}
+
+export {server_config ,db_config ,db_orm ,default_values}
