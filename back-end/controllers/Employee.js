@@ -41,8 +41,8 @@ export default class Employee {
 
     async create(req ,res) {
         const errors = req.session.errors ? req.session.errors : []
-        const titles = await this.job_titles.list()
-        const settings = await this.settings.list()
+        const titles = await this.job_titles.list_all()
+        const settings = await this.settings.list_all()
         res.render('hr-module/employees/create', {...this.common_return ,titles ,settings ,errors})
         req.session.errors = []
     }
@@ -71,8 +71,8 @@ export default class Employee {
     async edit(req ,res) {
         const id = req.params.id
         const model = await this.model.fetch(id)
-        const titles = await this.job_titles.list()
-        const settings = await this.settings.list()
+        const titles = await this.job_titles.list_all()
+        const settings = await this.settings.list_all()
         const errors = req.session.errors ? req.session.errors : []
         res.render('hr-module/employees/edit', {...this.common_return ,model ,titles ,settings ,errors})
     }

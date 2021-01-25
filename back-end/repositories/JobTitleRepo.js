@@ -13,6 +13,10 @@ export default class JobTitleRepo {
         return [_titles.rows ,_titles.count]
     }
 
+    async list_all() {
+        return await JobTitleORM.findAll()
+    }
+
     async destroy(id) {
         const deleted = await JobTitleORM.destroy({
             where: {

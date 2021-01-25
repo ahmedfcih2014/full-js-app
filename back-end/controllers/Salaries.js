@@ -44,7 +44,7 @@ export default class Salaries {
 
     async create(req ,res) {
         const errors = req.session.errors ? req.session.errors : []
-        const employees = await this.employee_model.list()
+        const employees = await this.employee_model.list_all()
         res.render(
             'hr-module/salaries/create',
             {...this.common_return ,employees ,errors}
@@ -76,7 +76,7 @@ export default class Salaries {
     async edit(req ,res) {
         const id = req.params.id
         const salary = await this.model.fetch(id)
-        const employees = await this.employee_model.list()
+        const employees = await this.employee_model.list_all()
         const errors = req.session.errors ? req.session.errors : []
         res.render(
             'hr-module/salaries/edit',

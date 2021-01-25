@@ -13,6 +13,10 @@ export default class EmployeeSetting {
         return [_settings.rows ,_settings.count]
     }
 
+    async list_all() {
+        return await EmployeeSettingORM.findAll()
+    }
+
     async destroy(id) {
         EmployeeSettingORM.destroy({
             where: {id}

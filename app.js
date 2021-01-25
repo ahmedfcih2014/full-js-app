@@ -8,11 +8,26 @@ import Deduction_N_BonusesRouter from './back-end/routes/deductions-n-bonuses.js
 import Advances from './back-end/routes/advances.js'
 import SalariesRouter from './back-end/routes/salaries.js'
 import expressSession from 'express-session'
+import redis from 'redis'
+import connectRedis from 'connect-redis'
 import middlewares from './middlewares.js'
 import Auth from './back-end/controllers/Auth.js'
 import SetupORMRelation from './back-end/orm-models/SetupRelation.js'
 
 const app = express()
+
+const RedisStore = connectRedis(expressSession)
+//Configure redis client
+const redisClient = redis.createClient({
+    host: 'localhost',
+    port: 6379
+})
+redisClient.on('error', function (err) {
+    console.log('Could not establish a connection with redis. ' + err);
+});
+redisClient.on('connect', function (err) {
+    console.log('Connected to redis successfully');
+});
 
 // set view engine
 app.set('view engine' ,'ejs')
@@ -23,6 +38,7 @@ app.use(express.static('./public'))
 app.use(express.urlencoded({extended: true}))
 app.use(
     expressSession({
+        store: new RedisStore({ client: redisClient }),
         secret: '$3cre6KEYM0stH3R3' ,saveUninitialized: false ,resave: false ,
         name: 'sid',
         cookie: {

@@ -16,6 +16,10 @@ export default class EmployeeRepo {
         return [_employees.rows ,_employees.count]
     }
 
+    async list_all() {
+        return await EmployeeORM.findAll()
+    }
+
     async destroy(id) {
         const deleted = EmployeeORM.destroy({
             where: {id: id}

@@ -43,7 +43,7 @@ export default class Advances {
     }
 
     async create(req ,res) {
-        const employees = await this.employee_model.list()
+        const employees = await this.employee_model.list_all()
         const errors = req.session.errors ? req.session.errors : []
         res.render(
             'hr-module/advances/create',
@@ -72,7 +72,7 @@ export default class Advances {
     async edit(req ,res) {
         const id = req.params.id
         const model = await this.model.fetch(id)
-        const employees = await this.employee_model.list()
+        const employees = await this.employee_model.list_all()
         const errors = req.session.errors ? req.session.errors : []
         res.render(
             'hr-module/advances/edit',
