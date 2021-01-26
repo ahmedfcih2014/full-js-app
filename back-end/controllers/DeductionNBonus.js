@@ -14,6 +14,7 @@ export default class DeductionNBonus {
     }
 
     async index(req ,res) {
+        const admin = req.session.admin
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [models ,rows_number] = await this.model.list(page ,limit ,true)
@@ -22,7 +23,7 @@ export default class DeductionNBonus {
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/deductions-n-bonuses/index',
-            {...this.common_return ,models ,is_danger ,alert_message ,pages}
+            {...this.common_return ,models ,is_danger ,alert_message ,pages ,admin}
         )
         req.session.alert_message = ''
         req.session.is_danger = undefined
@@ -43,13 +44,14 @@ export default class DeductionNBonus {
     }
 
     async create(req ,res) {
+        const admin = req.session.admin
         const errors = req.session.errors ? req.session.errors : []
         const employees = await this.employee_model.list_all()
         res.render(
             'hr-module/deductions-n-bonuses/create',
-            {...this.common_return ,employees ,errors}
+            {...this.common_return ,employees ,errors ,admin}
         )
-        req.session.errors = []
+        req.session.errors = null
     }
 
     async store(req ,res) {
@@ -70,13 +72,14 @@ export default class DeductionNBonus {
     }
 
     async edit(req ,res) {
+        const admin = req.session.admin
         const id = req.params.id
         const model = await this.model.fetch(id)
         const employees = await this.employee_model.list_all()
         const errors = req.session.errors ? req.session.errors : []
         res.render(
             'hr-module/deductions-n-bonuses/edit',
-            {...this.common_return ,model ,employees ,errors}
+            {...this.common_return ,model ,employees ,errors ,admin}
         )
     }
 
@@ -95,7 +98,7 @@ export default class DeductionNBonus {
             await this.model.update(id ,deduction)
             req.session.alert_message = 'Deduction updated successfully in our data'
             res.redirect('/deduction-bonuses')
-            req.session.errors = []
+            req.session.errors = null
         }
     }
 }

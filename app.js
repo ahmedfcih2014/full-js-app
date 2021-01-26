@@ -7,6 +7,7 @@ import AttendanceRouter from './back-end/routes/attendances.js'
 import Deduction_N_BonusesRouter from './back-end/routes/deductions-n-bonuses.js'
 import Advances from './back-end/routes/advances.js'
 import SalariesRouter from './back-end/routes/salaries.js'
+import AdminsRouter from './back-end/routes/admins.js'
 import expressSession from 'express-session'
 import redis from 'redis'
 import connectRedis from 'connect-redis'
@@ -60,6 +61,7 @@ app.get('/dashboard' ,middlewares.is_admin_auth ,(req ,res) => {
     res.render('layout' ,{title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: ''})
 })
 
+app.use('/admins' ,middlewares.is_admin_auth ,AdminsRouter)
 app.use('/job-titles' ,middlewares.is_admin_auth ,JobTitleRouter)
 app.use('/employee-settings' ,middlewares.is_admin_auth ,EmployeeSettingRouter)
 app.use('/employees' ,middlewares.is_admin_auth ,EmployeesRouter)

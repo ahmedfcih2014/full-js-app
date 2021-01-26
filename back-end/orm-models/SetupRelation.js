@@ -5,6 +5,8 @@ import Attendance from './Attendance.js'
 import Deduction_N_Bonus from './Deduction_N_Bonus.js'
 import EmployeeSetting from './EmployeeSetting.js'
 import Salary from './Salary.js'
+import Admin from './Admin.js'
+import AdminPermissions from './AdminPermissions.js'
 
 export default () => {
     Employee.belongsTo(JobTitle ,{
@@ -29,5 +31,9 @@ export default () => {
 
     Salary.belongsTo(Employee ,{
         foreignKey: 'employee_id'
+    })
+
+    Admin.hasMany(AdminPermissions ,{
+        foreignKey: 'admin_id'
     })
 }

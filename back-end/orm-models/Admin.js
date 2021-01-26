@@ -13,6 +13,10 @@ const Admin = db_orm.define('admin' ,{
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    is_super_admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: 0
     }
 } ,{
     timestamps: false

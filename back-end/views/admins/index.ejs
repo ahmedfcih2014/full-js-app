@@ -1,0 +1,48 @@
+<%- include('../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <a href="/admins/create" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+        </a>
+        <h3 class="pull-left"> Admins CRUD </h3>
+        <div class="clearfix"></div>
+        <% if (alert_message) { %>
+            <div class="alert alert-<%= is_danger ? 'danger' : 'success' %>">
+                <%= alert_message %>
+            </div>
+        <% }%>
+        <table class="table table-responsive table-bordered table-striped" style="margin-top: 15px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Is Super Admin</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% models.forEach(model => { %>
+                    <tr>
+                        <td> <%= model.id %> </td>
+                        <td> <%= model.name %> </td>
+                        <td> <%= model.username %> </td>
+                        <td> <%= model.is_super_admin ? 'Yes' : 'No' %> </td>
+                        <td>
+                            <a href="/admins/edit/<%= model.id %>" class="btn btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger" onclick="delete_me('/admins/delete/<%= model.id %>')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <%- include('../partials/index-pagination.ejs') %>
+    </div>
+<%- include('../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../partials/master-part-3.ejs') %>

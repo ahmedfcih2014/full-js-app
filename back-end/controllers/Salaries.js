@@ -14,6 +14,7 @@ export default class Salaries {
     }
 
     async index(req ,res) {
+        const admin = req.session.admin
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [models ,rows_number] = await this.model.list(page ,limit ,true)
@@ -22,7 +23,7 @@ export default class Salaries {
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/salaries/index',
-            {...this.common_return ,models ,alert_message ,is_danger ,pages}
+            {...this.common_return ,models ,alert_message ,is_danger ,pages ,admin}
         )
         req.session.alert_message = ''
         req.session.is_danger = undefined
@@ -43,13 +44,14 @@ export default class Salaries {
     }
 
     async create(req ,res) {
+        const admin = req.session.admin
         const errors = req.session.errors ? req.session.errors : []
         const employees = await this.employee_model.list_all()
         res.render(
             'hr-module/salaries/create',
-            {...this.common_return ,employees ,errors}
+            {...this.common_return ,employees ,errors ,admin}
         )
-        req.session.errors = []
+        req.session.errors = null
     }
 
     async store(req ,res) {
@@ -78,9 +80,10 @@ export default class Salaries {
         const salary = await this.model.fetch(id)
         const employees = await this.employee_model.list_all()
         const errors = req.session.errors ? req.session.errors : []
+        const admin = req.session.admin
         res.render(
             'hr-module/salaries/edit',
-            {...this.common_return ,model: salary ,employees ,errors}
+            {...this.common_return ,model: salary ,employees ,errors ,admin}
         )
     }
 
@@ -103,7 +106,7 @@ export default class Salaries {
             await this.model.update(id ,salary)
             req.session.alert_message = 'Salary updated successfully in our data'
             res.redirect('/salaries')
-            req.session.errors = []
+            req.session.errors = null
         }
     }
 }

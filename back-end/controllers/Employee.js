@@ -14,13 +14,14 @@ export default class Employee {
     }
 
     async index(req ,res) {
+        const admin = req.session.admin
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [employees ,rows_number] = await this.model.list(page ,limit ,true)
         let alert_message = req.session.alert_message ? req.session.alert_message : false
         let is_danger = req.session.is_danger ? req.session.is_danger : false
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
-        res.render('hr-module/employees/index', {...this.common_return ,employees ,alert_message ,is_danger ,pages})
+        res.render('hr-module/employees/index', {...this.common_return ,employees ,alert_message ,is_danger ,pages ,admin})
         req.session.alert_message = ''
         req.session.is_danger = undefined
     }
@@ -40,11 +41,12 @@ export default class Employee {
     }
 
     async create(req ,res) {
+        const admin = req.session.admin
         const errors = req.session.errors ? req.session.errors : []
         const titles = await this.job_titles.list_all()
         const settings = await this.settings.list_all()
-        res.render('hr-module/employees/create', {...this.common_return ,titles ,settings ,errors})
-        req.session.errors = []
+        res.render('hr-module/employees/create', {...this.common_return ,titles ,settings ,errors ,admin})
+        req.session.errors = null
     }
 
     async store(req ,res) {
@@ -69,12 +71,13 @@ export default class Employee {
     }
 
     async edit(req ,res) {
+        const admin = req.session.admin
         const id = req.params.id
         const model = await this.model.fetch(id)
         const titles = await this.job_titles.list_all()
         const settings = await this.settings.list_all()
         const errors = req.session.errors ? req.session.errors : []
-        res.render('hr-module/employees/edit', {...this.common_return ,model ,titles ,settings ,errors})
+        res.render('hr-module/employees/edit', {...this.common_return ,model ,titles ,settings ,errors ,admin})
     }
 
     async update(req ,res) {
@@ -96,7 +99,7 @@ export default class Employee {
             await this.model.update(id ,employee)
             req.session.alert_message = 'Employee updated successfully in our data'
             res.redirect('/employees')
-            req.session.errors = []
+            req.session.errors = null
         }
     }
 }

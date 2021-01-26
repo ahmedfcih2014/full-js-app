@@ -14,6 +14,7 @@ export default class JobTitle {
     }
 
     async index(req ,res) {
+        const admin = req.session.admin
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [job_titles ,rows_number] = await this.model.list(page ,limit ,true)
@@ -22,7 +23,7 @@ export default class JobTitle {
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/job-titles/index',
-            {...this.common_return ,job_titles ,alert_message ,is_danger ,pages}
+            {...this.common_return ,job_titles ,alert_message ,is_danger ,pages ,admin}
         )
         req.session.alert_message = ''
         req.session.is_danger = undefined
@@ -43,9 +44,10 @@ export default class JobTitle {
     }
 
     create(req ,res) {
+        const admin = req.session.admin
         const errors = req.session.errors ? req.session.errors : []
-        res.render('hr-module/job-titles/create', {...this.common_return ,errors})
-        req.session.errors = []
+        res.render('hr-module/job-titles/create', {...this.common_return ,errors ,admin})
+        req.session.errors = null
     }
 
     async store(req ,res) {
@@ -65,10 +67,11 @@ export default class JobTitle {
     }
 
     async edit(req ,res) {
+        const admin = req.session.admin
         const id = req.params.id
         const model = await this.model.fetch(id)
         const errors = req.session.errors ? req.session.errors : []
-        res.render('hr-module/job-titles/edit', {...this.common_return ,model ,errors})
+        res.render('hr-module/job-titles/edit', {...this.common_return ,model ,errors ,admin})
     }
 
     async update(req ,res) {
@@ -85,7 +88,7 @@ export default class JobTitle {
             await this.model.update(id ,job_title)
             req.session.alert_message = 'Job Title updated successfully in our data'
             res.redirect('/job-titles')
-            req.session.errors = []
+            req.session.errors = null
         }
     }
 }

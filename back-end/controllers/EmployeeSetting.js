@@ -12,6 +12,7 @@ export default class EmployeeSetting {
     }
 
     async index(req ,res) {
+        const admin = req.session.admin
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [settings ,rows_number] = await this.model.list(page ,limit ,true)
@@ -20,7 +21,7 @@ export default class EmployeeSetting {
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/employee-settings/index',
-            {...this.common_return ,settings ,alert_message ,is_danger ,pages}
+            {...this.common_return ,settings ,alert_message ,is_danger ,pages ,admin}
         )
         req.session.alert_message = ''
         req.session.is_danger = undefined
@@ -41,9 +42,10 @@ export default class EmployeeSetting {
     }
 
     create(req ,res) {
+        const admin = req.session.admin
         const errors = req.session.errors ? req.session.errors : []
-        res.render('hr-module/employee-settings/create', {...this.common_return ,errors})
-        req.session.errors = []
+        res.render('hr-module/employee-settings/create', {...this.common_return ,errors ,admin})
+        req.session.errors = null
     }
 
     async store(req ,res) {
@@ -66,10 +68,11 @@ export default class EmployeeSetting {
     }
 
     async edit(req ,res) {
+        const admin = req.session.admin
         const id = req.params.id
         const setting = await this.model.fetch(id)
         const errors = req.session.errors ? req.session.errors : []
-        res.render('hr-module/employee-settings/edit', {...this.common_return ,model: setting ,errors})
+        res.render('hr-module/employee-settings/edit', {...this.common_return ,model: setting ,errors ,admin})
     }
 
     async update(req ,res) {
@@ -89,7 +92,7 @@ export default class EmployeeSetting {
             await this.model.update(id ,setting)
             req.session.alert_message = 'Employee Setting updated successfully in our data'
             res.redirect('/employee-settings')
-            req.session.errors = []
+            req.session.errors = null
         }
     }
 }

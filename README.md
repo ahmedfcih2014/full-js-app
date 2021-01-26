@@ -22,7 +22,9 @@ Todo List:
 3- Make authentication [done]
 4- Using ORM instead of raw sql [done]
 5- pagination [done] ,but need to enhance
-6- Enable permissions and use them in HR Module
+6- Enable permissions & admin CRUD [done]
 7- Use redis as a gateway to store sessions [done]
     just follow this link https://medium.com/swlh/session-management-in-nodejs-using-redis-as-session-store-64186112aa9
     after install redis on my machine and check its works fine
+8- Use permissions in HR Module
+9- need to make session works as a flush session

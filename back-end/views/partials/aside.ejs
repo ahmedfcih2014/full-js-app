@@ -15,6 +15,13 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
+            <% if (typeof admin != 'undefined' && admin.is_super_admin == 1) { %>
+                <li class="<%= current_uri == '/admins' ? 'active' : '' %>">
+                    <a href="/admins">
+                        <i class="fa fa-lock"></i> <span>Admins</span>
+                    </a>
+                </li>
+            <% } %>
             <li class="treeview <%= current_group == 'hr' ? 'active open' : '' %>" style="height: auto;">
                 <a href="#">
                     <i class="fa fa-suitcase"></i> <span>HR</span>

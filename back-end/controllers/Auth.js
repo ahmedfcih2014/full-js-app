@@ -12,10 +12,13 @@ export default {
         }
         const admin = await adminCont.login(credentials)
         if (admin) {
-            req.session.admin = {
+            const session_admin = {
                 name: admin.name,
-                username: admin.username
+                username: admin.username,
+                is_super_admin: admin.is_super_admin
             }
+            if (!session_admin.is_super_admin) session_admin.admin_permissions = admin.admin_permissions
+            req.session.admin = session_admin
             res.redirect('/dashboard')
         } else {
             res.redirect('back')

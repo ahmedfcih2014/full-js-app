@@ -1,0 +1,80 @@
+<%- include('../partials/master-part-1.ejs') %>
+    <div class="col-md-12 box">
+        <h3> Admins CRUD </h3>
+        <div class="col-md-12">
+            <% errors.forEach(error => { %>
+                <div class="alert alert-danger">
+                    <%= error.msg %>
+                </div>
+            <% }) %>
+        </div>
+        <form method="POST">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Name </label>
+                    <input class="form-control" placeholder="Name" name="name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Username </label>
+                    <input class="form-control" placeholder="Username" name="username">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Password </label>
+                    <input class="form-control" placeholder="Password" name="password" type="password">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Is Super Admin </label>
+                    <select class="form-control select2" name="is_super_admin">
+                        <option value="0">Not Super Admin</option>
+                        <option value="1">Super Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-responsive table-bordered table-striped">
+                    <thead style="font-weight: bold;">
+                        <tr>
+                            <td> Screen Name </td>
+                            <td> View Permission </td>
+                            <td> Add Permission </td>
+                            <td> Edit Permission </td>
+                            <td> Delete Permission </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% system_screens.forEach(screen => { %>
+                            <tr>
+                                <td> <%= screen.view_name %> </td>
+                                <td>
+                                    <label> <input type="checkbox" name="permissions[<%= screen.db_name %>][view]"/> </label>
+                                </td>
+                                <td>
+                                    <label> <input type="checkbox" name="permissions[<%= screen.db_name %>][add]"/> </label>
+                                </td>
+                                <td>
+                                    <label> <input type="checkbox" name="permissions[<%= screen.db_name %>][edit]"/> </label>
+                                </td>
+                                <td>
+                                    <label> <input type="checkbox" name="permissions[<%= screen.db_name %>][delete]"/> </label>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary"> Save </button>
+            </div>
+        </form>
+    </div>
+<%- include('../partials/master-part-2.ejs') %>
+	<script>
+        // custom js here
+    </script>
+<%- include('../partials/master-part-3.ejs') %>
