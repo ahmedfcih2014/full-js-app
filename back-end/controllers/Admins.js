@@ -3,6 +3,9 @@ import { validationResult } from 'express-validator'
 import Pagination from './Pagination.js'
 import { default_values ,system_screens } from '../../config.js'
 import AdminPermissionsORM from '../orm-models/AdminPermissions.js'
+import bcrypt from 'bcrypt'
+
+const saltRounds = 10
 
 export default class Admins {
     constructor() {
@@ -61,23 +64,25 @@ export default class Admins {
             const admin = {
                 name: req.body.name,
                 username: req.body.username,
-                password: req.body.password,
+                password: await bcrypt.hash(req.body.password ,saltRounds),
                 is_super_admin: req.body.is_super_admin
             }
             const admin_model = await this.model.create(admin)
-            const permissions = Object.entries(req.body.permissions)
-            permissions.forEach(permission => {
-                const screen_name = permission[0]
-                const actions = permission[1]
-                AdminPermissionsORM.create({
-                    screen_name: screen_name,
-                    admin_id: admin_model.id,
-                    view_permission: actions.view ? 1 : 0,
-                    add_permission: actions.add ? 1 : 0,
-                    edit_permission: actions.edit ? 1 : 0,
-                    delete_permission: actions.delete ? 1 : 0
+            try {
+                const permissions = Object.entries(req.body.permissions)
+                permissions.forEach(permission => {
+                    const screen_name = permission[0]
+                    const actions = permission[1]
+                    AdminPermissionsORM.create({
+                        screen_name: screen_name,
+                        admin_id: admin_model.id,
+                        view_permission: actions.view ? 1 : 0,
+                        add_permission: actions.add ? 1 : 0,
+                        edit_permission: actions.edit ? 1 : 0,
+                        delete_permission: actions.delete ? 1 : 0
+                    })
                 })
-            })
+            } catch (err) {}
             req.session.alert_message = 'Admin stored successfully to our data'
             res.redirect('/admins')
         }
@@ -112,23 +117,27 @@ export default class Admins {
             const admin = {}
             if (req.body.name) admin.name = req.body.name
             if (req.body.username) admin.username = req.body.username
-            if (req.body.password) admin.password = req.body.password
+            if (req.body.password) {
+                admin.password = await bcrypt.hash(req.body.password ,saltRounds)
+            }
             if (req.body.is_super_admin) admin.is_super_admin = req.body.is_super_admin
             const [model ,updated] = await this.model.update(id ,admin)
             await AdminPermissionsORM.destroy({where: {admin_id: id}})
-            const permissions = Object.entries(req.body.permissions)
-            permissions.forEach(permission => {
-                const screen_name = permission[0]
-                const actions = permission[1]
-                AdminPermissionsORM.create({
-                    screen_name: screen_name,
-                    admin_id: model.id,
-                    view_permission: actions.view ? 1 : 0,
-                    add_permission: actions.add ? 1 : 0,
-                    edit_permission: actions.edit ? 1 : 0,
-                    delete_permission: actions.delete ? 1 : 0
+            try {
+                const permissions = Object.entries(req.body.permissions)
+                permissions.forEach(permission => {
+                    const screen_name = permission[0]
+                    const actions = permission[1]
+                    AdminPermissionsORM.create({
+                        screen_name: screen_name,
+                        admin_id: model.id,
+                        view_permission: actions.view ? 1 : 0,
+                        add_permission: actions.add ? 1 : 0,
+                        edit_permission: actions.edit ? 1 : 0,
+                        delete_permission: actions.delete ? 1 : 0
+                    })
                 })
-            })
+            } catch (err) {}
             req.session.alert_message = 'Admin updated successfully in our data'
             res.redirect('/admins')
             req.session.errors = null

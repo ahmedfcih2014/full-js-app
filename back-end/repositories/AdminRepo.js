@@ -4,7 +4,7 @@ import AdminPermissionsORM from '../orm-models/AdminPermissions.js'
 
 export default class AdminRepo {
     async login(cred) {
-        const admin = await AdminORM.findAll({username: cred.username ,include: AdminPermissionsORM})
+        const admin = await AdminORM.findAll({where: {username: cred.username} ,include: AdminPermissionsORM})
         if (admin[0]) {
             const passChecked = await bcrypt.compare(cred.password ,admin[0].password)
             return passChecked ? admin[0] : undefined
