@@ -18,23 +18,19 @@ export default class JobTitle {
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [job_titles ,rows_number] = await this.model.list(page ,limit ,true)
-        let alert_message = req.session.alert_message ? req.session.alert_message : false
-        let is_danger = req.session.is_danger ? req.session.is_danger : false
+        let alert_message = await req.consumeFlash('alert_message')
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/job-titles/index',
-            {...this.common_return ,job_titles ,alert_message ,is_danger ,pages ,admin}
+            {...this.common_return ,job_titles ,alert_message ,pages ,admin}
         )
-        req.session.alert_message = ''
-        req.session.is_danger = undefined
     }
 
     async delete(req ,res) {
         const id = req.params.id
         const deleted = await this.model.destroy(id)
         if (deleted) {
-            req.session.alert_message = 'Job Title deleted successfully from our data'
-            req.session.is_danger = true
+            await req.flash('alert_message' ,'Job Title deleted successfully from our data')
             res.send({
                 location: '/job-titles'
             })
@@ -61,7 +57,7 @@ export default class JobTitle {
                 name_ar: req.body.name_ar
             }
             await this.model.create(job_title)
-            req.session.alert_message = 'Job Title stored successfully to our data'
+            await req.flash('alert_message' ,'Job Title stored successfully to our data')
             res.redirect('/job-titles')
         }
     }
@@ -86,7 +82,7 @@ export default class JobTitle {
                 name_ar: req.body.name_ar
             }
             await this.model.update(id ,job_title)
-            req.session.alert_message = 'Job Title updated successfully in our data'
+            await req.flash('alert_message' ,'Job Title updated successfully in our data')
             res.redirect('/job-titles')
             req.session.errors = null
         }

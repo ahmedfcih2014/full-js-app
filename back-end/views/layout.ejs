@@ -1,6 +1,9 @@
 <%- include('./partials/master-part-1.ejs') %>
     <div class="col-md-12 box">
         <h3> Content most be here </h3>
+        <% if (auth_message && auth_message != '' && auth_message != undefined) { %>
+            <div class="alert alert-danger"> <%= auth_message %> </div>
+        <% } %>
     </div>
 <%- include('./partials/master-part-2.ejs') %>
 	<script>

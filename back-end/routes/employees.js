@@ -2,10 +2,16 @@ import express from 'express'
 import Employee from '../controllers/Employee.js'
 import { checkSchema } from 'express-validator'
 import validationRules from '../validations/EmployeeValidation.js'
+import middlewares from '../../middlewares.js'
 
 const router = express.Router()
 
 const controller = new Employee()
+
+router.use((req ,res ,next) => {
+    req.page_name = 'employees'
+    middlewares.is_admin_authorized(req ,res ,next)
+})
 
 router.get('/' ,(req ,res) => controller.index(req ,res))
 router.get('/create' ,(req ,res) => controller.create(req ,res))

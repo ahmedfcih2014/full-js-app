@@ -1,5 +1,10 @@
 import express from 'express'
+import expressSession from 'express-session'
+import redis from 'redis'
+import connectRedis from 'connect-redis'
+import {flash} from 'express-flash-message'
 import {server_config} from './config.js'
+import middlewares from './middlewares.js'
 import JobTitleRouter from './back-end/routes/job-titles.js'
 import EmployeeSettingRouter from './back-end/routes/employee-settings.js'
 import EmployeesRouter from './back-end/routes/employees.js'
@@ -8,10 +13,6 @@ import Deduction_N_BonusesRouter from './back-end/routes/deductions-n-bonuses.js
 import Advances from './back-end/routes/advances.js'
 import SalariesRouter from './back-end/routes/salaries.js'
 import AdminsRouter from './back-end/routes/admins.js'
-import expressSession from 'express-session'
-import redis from 'redis'
-import connectRedis from 'connect-redis'
-import middlewares from './middlewares.js'
 import Auth from './back-end/controllers/Auth.js'
 import SetupORMRelation from './back-end/orm-models/SetupRelation.js'
 
@@ -49,6 +50,7 @@ app.use(
         }
     })
 )
+app.use(flash({ sessionKeyName: 'flashMessage' }))
 
 app.get('/login' , middlewares.is_admin_unauth ,Auth.getLogin)
 app.post('/login' , middlewares.is_admin_unauth ,Auth.postLogin)
@@ -57,58 +59,22 @@ app.get('/logout' , middlewares.is_admin_auth ,Auth.logout)
 SetupORMRelation()
 
 app.get('/' , middlewares.is_admin_auth ,(req ,res) => res.redirect('/dashboard'))
-app.get('/dashboard' , middlewares.is_admin_auth ,(req ,res) => {
-    res.render('layout' ,{title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: ''})
+app.get('/dashboard' , middlewares.is_admin_auth ,async (req ,res) => {
+    const admin = req.session.admin
+    const auth_message = await req.consumeFlash('unauthoirzed')
+    res.render('layout' ,{
+        title: 'Dashboard' ,current_uri: '/dashboard' ,current_group: '' ,admin ,auth_message
+    })
 })
 
-app.use('/admins' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'admins' // for super admin only
-        middlewares.is_admin_authorized(req ,res ,next)
-    }] ,AdminsRouter)
-app.use('/job-titles',
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'job_titles' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }], JobTitleRouter)
-app.use('/employee-settings' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'employee_settings' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }] ,EmployeeSettingRouter)
-app.use('/employees' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'employees' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }] ,EmployeesRouter)
-app.use('/attendance' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'attendance' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }], AttendanceRouter)
-app.use('/deduction-bonuses' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'deductions_n_bonuses' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }], Deduction_N_BonusesRouter)
-app.use('/advances' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'advances' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }], Advances)
-app.use('/salaries' ,
-    [middlewares.is_admin_auth,
-    (req ,res ,next) => {
-        req.page_name = 'salaries' // from config file ,db_name attribute
-        middlewares.is_admin_authorized(req ,res ,next)
-    }], SalariesRouter)
+app.use('/admins' ,middlewares.is_admin_auth ,AdminsRouter)
+app.use('/job-titles', middlewares.is_admin_auth, JobTitleRouter)
+app.use('/employee-settings' ,middlewares.is_admin_auth ,EmployeeSettingRouter)
+app.use('/employees' ,middlewares.is_admin_auth ,EmployeesRouter)
+app.use('/attendance' ,middlewares.is_admin_auth, AttendanceRouter)
+app.use('/deduction-bonuses' ,middlewares.is_admin_auth, Deduction_N_BonusesRouter)
+app.use('/advances' ,middlewares.is_admin_auth, Advances)
+app.use('/salaries' ,middlewares.is_admin_auth, SalariesRouter)
 
 app.listen(
     server_config.port,

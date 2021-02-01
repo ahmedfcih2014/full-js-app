@@ -3,10 +3,16 @@ import Admins from '../controllers/Admins.js'
 import { checkSchema } from 'express-validator'
 import createValidationRule from '../validations/AdminCreateValidation.js'
 import editValidationRule from '../validations/AdminEditValidation.js'
+import middlewares from '../../middlewares.js'
 
 const router = express.Router()
 
 const controller = new Admins()
+
+router.use((req ,res ,next) => {
+    req.page_name = 'admins'
+    middlewares.is_admin_authorized(req ,res ,next)
+})
 
 router.get('/' ,(req ,res) => controller.index(req ,res))
 router.get('/create' ,(req ,res) => controller.create(req ,res))

@@ -18,23 +18,19 @@ export default class DeductionNBonus {
         const page = req.query.page ? parseInt(req.query.page) : default_values.page
         const limit = req.query.limit ? parseInt(req.query.limit) : default_values.limit
         const [models ,rows_number] = await this.model.list(page ,limit ,true)
-        let alert_message = req.session.alert_message ? req.session.alert_message : false
-        let is_danger = req.session.is_danger ? req.session.is_danger : false
+        let alert_message = await req.consumeFlash('alert_message')
         const pages = Pagination(this.common_return.current_uri ,page ,rows_number ,limit)
         res.render(
             'hr-module/deductions-n-bonuses/index',
-            {...this.common_return ,models ,is_danger ,alert_message ,pages ,admin}
+            {...this.common_return ,models ,alert_message ,pages ,admin}
         )
-        req.session.alert_message = ''
-        req.session.is_danger = undefined
     }
 
     async delete(req ,res) {
         const id = req.params.id
         const deleted = await this.model.destroy(id)
         if (deleted) {
-            req.session.alert_message = 'Deduction deleted successfully from our data'
-            req.session.is_danger = true
+            await req.flash('alert_message' ,'Deduction deleted successfully from our data')
             res.send({
                 location: '/deduction-bonuses'
             })
@@ -66,7 +62,7 @@ export default class DeductionNBonus {
                 employee_id: req.body.employee_id
             }
             await this.model.create(deduction)
-            req.session.alert_message = 'Deduction stored successfully to our data'
+            await req.flash('alert_message' ,'Deduction stored successfully to our data')
             res.redirect('/deduction-bonuses')
         }
     }
@@ -96,7 +92,7 @@ export default class DeductionNBonus {
                 employee_id: req.body.employee_id
             }
             await this.model.update(id ,deduction)
-            req.session.alert_message = 'Deduction updated successfully in our data'
+            await req.flash('alert_message' ,'Deduction updated successfully in our data')
             res.redirect('/deduction-bonuses')
             req.session.errors = null
         }

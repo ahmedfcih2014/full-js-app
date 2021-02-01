@@ -2,10 +2,16 @@ import express from 'express'
 import Advances from '../controllers/Advances.js'
 import { checkSchema } from 'express-validator'
 import validationRule from '../validations/AdvanceValidation.js'
+import middlewares from '../../middlewares.js'
 
 const router = express.Router()
 
 const controller = new Advances()
+
+router.use((req ,res ,next) => {
+    req.page_name = 'advances'
+    middlewares.is_admin_authorized(req ,res ,next)
+})
 
 router.get('/' ,(req ,res) => controller.index(req ,res))
 router.get('/create' ,(req ,res) => controller.create(req ,res))

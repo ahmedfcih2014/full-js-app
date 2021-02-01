@@ -11,6 +11,7 @@ export default class AdminRepo {
         }
         return false
     }
+
     async list(page = 1 ,limit = 10 ,desc_order = false) {
         page = page <= 1 ? 1 : page
         const order = desc_order ? [['id' ,'desc']] : []
@@ -21,6 +22,15 @@ export default class AdminRepo {
         }
         const _admins = await AdminORM.findAndCountAll(options)
         return [_admins.rows ,_admins.count]
+    }
+
+    async destroy(id) {
+        const deleted = await AdminORM.destroy({
+            where: {
+                id: id
+            }
+        })
+        return deleted
     }
 
     async create(admin) {

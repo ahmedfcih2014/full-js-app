@@ -27,5 +27,6 @@ Todo List:
     just follow this link https://medium.com/swlh/session-management-in-nodejs-using-redis-as-session-store-64186112aa9
     after install redis on my machine and check its works fine
 8- Use permissions in HR Module [done]
-    ,but need to enhancement 'its work in general not for each functionality and need for refactor to be "Clean"'
-9- need to make session works as a flush session
+    8.1- clean up middlewares [done]
+    8.2- handle each function instead of general check
+9- need to make session works as a flush session [done]

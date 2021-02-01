@@ -5,8 +5,8 @@
         </a>
         <h3 class="pull-left"> Salaries CRUD </h3>
         <div class="clearfix"></div>
-        <% if (alert_message) { %>
-            <div class="alert alert-<%= is_danger ? 'danger' : 'success' %>">
+        <% if (alert_message != '' && alert_message != undefined) { %>
+            <div class="alert alert-success">
                 <%= alert_message %>
             </div>
         <% }%>
